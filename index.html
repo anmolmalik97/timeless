@@ -16,6 +16,130 @@
       rel="stylesheet"
     />
     <style>
+      .nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 101;
+      }
+      .nav-toggle.open .nav-toggle-bar {
+        background: #b8955c;
+      }
+      .nav-toggle.open .nav-toggle-bar:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle.open .nav-toggle-bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      .nav-toggle.open .nav-toggle-bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+      .nav-links a {
+        width: 90vw;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+      @media (max-width: 600px) {
+        .nav-inner {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .nav-links {
+          display: none !important;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          background: var(--panel);
+          position: fixed;
+          top: 60px;
+          left: 0;
+          width: 100vw;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+          border-radius: 0 0 16px 16px;
+          padding: 18px 0;
+          z-index: 100;
+        }
+        .nav-links.open {
+          display: flex !important;
+        }
+      }
+      .nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px;
+      }
+      .nav-toggle-bar {
+        width: 28px;
+        height: 4px;
+        background: var(--brand);
+        margin: 4px 0;
+        border-radius: 2px;
+        display: block;
+      }
+      @media (max-width: 600px) {
+        .nav-inner {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .nav-toggle {
+          display: flex;
+        }
+        .nav-links {
+          display: none !important;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          background: var(--panel);
+          position: absolute;
+          top: 60px;
+          left: 0;
+          width: 100vw;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+          border-radius: 0 0 16px 16px;
+          padding: 18px 0;
+        }
+        .nav-links.open {
+          display: flex !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .nav-inner {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          padding: 10px 0;
+        }
+        .brand {
+          justify-content: center;
+          margin-bottom: 10px;
+        }
+        .nav-links {
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+        }
+        .btn {
+          width: 100%;
+          justify-content: center;
+          font-size: 18px;
+          padding: 14px 0;
+        }
+      }
       :root {
         --bg: #101113;
         --panel: #18191b;
@@ -307,6 +431,50 @@
           order: -1;
         }
       }
+      @media (min-width: 601px) {
+        .nav-inner {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .nav-links {
+          display: flex !important;
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
+          position: static;
+          background: none;
+          box-shadow: none;
+          width: auto;
+          padding: 0;
+        }
+        .nav-links a {
+          width: auto;
+          max-width: none;
+          margin: 0;
+        }
+        .nav-toggle {
+          display: none !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .nav-inner {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          padding: 14px 0;
+        }
+        .brand {
+          margin-left: 0;
+          padding-left: 20px;
+        }
+        .nav-toggle {
+          display: flex;
+          position: static;
+          margin-right: 0;
+        }
+      }
     </style>
   </head>
   <body>
@@ -324,17 +492,26 @@
       <div class="container nav-inner">
         <a class="brand" href="#top">
           <img src="assets/full.png" alt="Timeless Fitness logo" />
-          <span class="word">Timeless Fitness</span>
         </a>
+        <button
+          class="nav-toggle"
+          aria-label="Toggle navigation"
+          onclick="toggleNav()"
+        >
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
         <nav class="nav-links">
-          <a class="btn" href="#programs">Programs</a>
-          <a class="btn" href="#facility">Facility</a>
-          <a class="btn" href="#contact">Contact</a>
+          <a class="btn" href="#programs" onclick="closeNav()">Programs</a>
+          <a class="btn" href="#facility" onclick="closeNav()">Facility</a>
+          <a class="btn" href="#contact" onclick="closeNav()">Contact</a>
           <a
             class="btn"
             href="https://www.instagram.com/timelessfitness.in/?hl=en"
             target="_blank"
             rel="noopener"
+            onclick="closeNav()"
             >Instagram ↗</a
           >
         </nav>
@@ -434,8 +611,8 @@
       <div class="container">
         <h2>Community Transformations</h2>
         <p class="lead">
-          Real people. Real results. Replace placeholders with your best
-          transformations and training shots.
+          Real people. Real results. unleash your best transformations and
+          training regime.
         </p>
         <div class="grid gallery" style="margin-top: 18px">
           <figure class="gal-item">
@@ -525,9 +702,6 @@
               <button class="btn primary" type="submit">Send</button>
             </div>
           </form>
-          <p style="margin-top: 10px" class="muted">
-            Replace email/WhatsApp with your real contact details.
-          </p>
         </div>
         <div>
           <div class="card">
@@ -587,6 +761,24 @@
     </style>
 
     <script>
+      // Hamburger menu toggle for mobile nav
+      function toggleNav() {
+        var navLinks = document.querySelector(".nav-links");
+        var navToggle = document.querySelector(".nav-toggle");
+        navLinks.classList.toggle("open");
+        navToggle.classList.toggle("open");
+      }
+      function closeNav() {
+        var navLinks = document.querySelector(".nav-links");
+        var navToggle = document.querySelector(".nav-toggle");
+        navLinks.classList.remove("open");
+        navToggle.classList.remove("open");
+      }
+      // Hamburger menu toggle for mobile nav
+      function toggleNav() {
+        var navLinks = document.querySelector(".nav-links");
+        navLinks.classList.toggle("open");
+      }
       // Redirect form submission to WhatsApp with filled info
       function redirectToWhatsApp(e) {
         e.preventDefault();
@@ -629,7 +821,7 @@
             .querySelectorAll(".section")
             .forEach((s) => (s.style.display = "block"));
           document.querySelector("footer").style.display = "block";
-        }, 2000); // 2 seconds
+        }, 1000); // 1 second
       });
     </script>
   </body>
