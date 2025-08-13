@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="assets/half.png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Timeless Fitness | Strength • Conditioning • Nutrition</title>
+    <meta
+      name="description"
+      content="Timeless Fitness — premium coaching studio for strength, conditioning, fat loss and sustainable results. Online & in‑person."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #101113;
+        --panel: #18191b;
+        --panel-2: #232325;
+        --text: #e6e0d0;
+        --muted: #b8a98a;
+        --brand: #c8a063;
+        --brand-2: #c8a063;
+        --accent: #c8a063;
+        --teal: #c8a063;
+        --ring: 0 0 0 3px rgba(200, 160, 99, 0.35);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+        scroll-behavior: smooth;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .container {
+        max-width: 1200px;
+        margin-inline: auto;
+        padding: 0 20px;
+      }
+
+      /* BACKDROP USING THEME IMAGE */
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        background: url("assets/theme.png") center/cover no-repeat fixed;
+        filter: saturate(120%) brightness(0.52);
+        opacity: 0.28;
+        z-index: -2;
+      }
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(
+            1100px 600px at 10% 0%,
+            rgba(131, 58, 180, 0.35),
+            transparent 40%
+          ),
+          radial-gradient(
+            1100px 600px at 100% 10%,
+            rgba(225, 48, 108, 0.35),
+            transparent 45%
+          ),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.85));
+        z-index: -1;
+      }
+
+      /* LOADER */
+      #loader {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #000;
+        z-index: 1000;
+      }
+      #loader .logo {
+        width: 120px;
+        animation: pulse 1.6s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scale(1.08);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+      }
+
+      /* NAV */
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(10, 11, 15, 0.6);
+        backdrop-filter: blur(10px) saturate(130%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand img {
+        height: 42px;
+        width: auto;
+      }
+      .brand .word {
+        font-family: Montserrat, Inter, sans-serif;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        transition: 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--ring);
+      }
+      .btn.primary {
+        background: linear-gradient(90deg, #c8a063 0%, #b8955c 100%);
+        color: #18191b;
+        border: 0;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 74px 0 36px;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 28px;
+        align-items: center;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(131, 58, 180, 0.18);
+        border: 1px solid rgba(131, 58, 180, 0.35);
+        color: #e8d7ff;
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .headline {
+        font-family: Montserrat, Inter, sans-serif;
+        font-weight: 800;
+        font-size: clamp(34px, 5.6vw, 60px);
+        line-height: 1.04;
+        margin: 12px 0;
+      }
+      .sub {
+        color: var(--muted);
+        font-size: 18px;
+        max-width: 60ch;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .hero-card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+
+      /* SECTIONS */
+      .section {
+        padding: 60px 0;
+      }
+      .section h2 {
+        font-family: Montserrat, Inter, sans-serif;
+        font-size: clamp(24px, 4.5vw, 36px);
+        margin: 0 0 8px;
+        font-weight: 800;
+      }
+      .section p.lead {
+        color: var(--muted);
+        max-width: 68ch;
+      }
+
+      /* GRIDS */
+      .grid {
+        display: grid;
+        gap: 22px;
+      }
+      .features {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 18px;
+        border-radius: 16px;
+      }
+      .card h3 {
+        margin: 6px 0 4px;
+      }
+
+      .two-col {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        align-items: center;
+      }
+
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+      .gal-item {
+        position: relative;
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .gal-item span {
+        position: absolute;
+        inset: auto 10px 10px 10px;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+      }
+
+      /* PRICING */
+      .price-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+      .price .num {
+        font-size: 34px;
+        font-weight: 800;
+      }
+
+      /* FOOTER */
+      .foot {
+        padding: 36px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        color: #b8c0cc;
+      }
+
+      /* UTIL */
+      ul {
+        padding-left: 18px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      @media (max-width: 880px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-visual {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- THEME BACKDROP -->
+    <div class="backdrop" aria-hidden="true"></div>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <!-- LOADER (uses half logo) -->
+    <div id="loader" role="status" aria-live="polite">
+      <img class="logo" src="assets/half.png" alt="Loading Timeless Fitness" />
+    </div>
+
+    <!-- NAV -->
+    <header class="nav" style="display: none">
+      <div class="container nav-inner">
+        <a class="brand" href="#top">
+          <img src="assets/full.png" alt="Timeless Fitness logo" />
+          <span class="word">Timeless Fitness</span>
+        </a>
+        <nav class="nav-links">
+          <a class="btn" href="#programs">Programs</a>
+          <a class="btn" href="#facility">Facility</a>
+          <a class="btn" href="#contact">Contact</a>
+          <a
+            class="btn"
+            href="https://www.instagram.com/timelessfitness.in/?hl=en"
+            target="_blank"
+            rel="noopener"
+            >Instagram ↗</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="top" style="display: none">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Strength • Conditioning • Nutrition</span>
+          <h1 class="headline">Timeless Fitness</h1>
+          <p class="sub">
+            Premium coaching in a private studio. Programming that respects your
+            schedule, delivers measurable progress, and sustains results for
+            life.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#contact">Book a Free Consult</a>
+            <a class="btn" href="#programs">Explore Programs</a>
+          </div>
+          <p style="margin-top: 12px" class="muted">
+            ISSN/ evidence‑based coaching • Beginner to advanced • In‑person &
+            online
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMS -->
+    <section class="section" id="programs" style="display: none">
+      <div class="container">
+        <h2>Programs</h2>
+        <p class="lead">
+          Pick a track. We tailor volume, intensity, and nutrition to your goal
+          and training age.
+        </p>
+        <div class="grid features" style="margin-top: 14px">
+          <article class="card">
+            <h3>Fat Loss Foundations</h3>
+            <p>
+              Training + habit systems + macros guidance. Weekly check‑ins for
+              compliance and course‑correction.
+            </p>
+            <p><strong>Best for:</strong> Recomposition & first 5–10kg.</p>
+          </article>
+          <article class="card">
+            <h3>Strength & Conditioning</h3>
+            <p>
+              Periodized blocks for strength, power, and work capacity. Form
+              reviews and progress testing.
+            </p>
+            <p><strong>Best for:</strong> Intermediate lifters.</p>
+          </article>
+          <article class="card">
+            <h3>Performance Prep</h3>
+            <p>
+              Sport‑supportive S&C with mobility and energy‑system work.
+              Individual constraints respected.
+            </p>
+            <p><strong>Best for:</strong> Athletes in/off‑season.</p>
+          </article>
+          <article class="card">
+            <h3>Personal Training</h3>
+            <p>
+              1:1 or small‑group sessions. Technique, mobility, and bespoke
+              conditioning blocks.
+            </p>
+            <p><strong>Best for:</strong> Hands‑on coaching.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FACILITY -->
+    <section class="section" id="facility" style="display: none">
+      <div class="container two-col">
+        <div>
+          <h2>The Studio</h2>
+          <p class="lead">
+            Private, appointment‑based training environment with premium
+            free‑weights, racks, platforms, sleds, and conditioning tools. No
+            crowds. No distractions. Just focused work.
+          </p>
+          <ul>
+            <li>Squat racks, deadlift platforms, calibrated plates</li>
+            <li>Dumbbells, kettlebells, cables, bands</li>
+            <li>Rower, assault bike, sled, battle ropes</li>
+            <li>Filtered water, towels, and hygiene protocols</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS / HIGHLIGHTS -->
+    <section class="section" id="highlights" style="display: none">
+      <div class="container">
+        <h2>Community Transformations</h2>
+        <p class="lead">
+          Real people. Real results. Replace placeholders with your best
+          transformations and training shots.
+        </p>
+        <div class="grid gallery" style="margin-top: 18px">
+          <figure class="gal-item">
+            <img
+              src="assets/IMG_0B44AE38C4E3-1.jpeg"
+              alt="12‑week fat loss"
+            /><span>12‑week fat loss</span>
+          </figure>
+          <figure class="gal-item">
+            <img
+              src="assets/IMG_3AB76A7BF00D-1.jpeg"
+              alt="Posture & mobility"
+            /><span>Posture & mobility</span>
+          </figure>
+          <figure class="gal-item">
+            <img src="assets/IMG_BB0C25C271B3-1.jpeg" alt="Strength PRs" /><span
+              >Strength PRs</span
+            >
+          </figure>
+          <figure class="gal-item">
+            <img
+              src="assets/IMG_C281E59634A8-1.jpeg"
+              alt="Lifestyle reboot"
+            /><span>Lifestyle reboot</span>
+          </figure>
+        </div>
+        <p style="margin-top: 16px">
+          <a
+            class="btn"
+            href="https://www.instagram.com/timelessfitness.in/"
+            target="_blank"
+            rel="noopener"
+            >See more on Instagram ↗</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact" style="display: none">
+      <div class="container two-col">
+        <div>
+          <h2>Book a Free Consult</h2>
+          <p class="lead">
+            Tell us your goals, schedule, and training history. We'll recommend
+            the right track for you.
+          </p>
+          <form
+            class="card"
+            name="contact"
+            onsubmit="return redirectToWhatsApp(event)"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <p style="display: none">
+              <label
+                >Don’t fill this out if you’re human: <input name="bot-field"
+              /></label>
+            </p>
+            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 12px">
+              <label>
+                Name<input required name="name" placeholder="Your name"
+              /></label>
+              <label>
+                Email<input
+                  required
+                  type="email"
+                  name="email"
+                  placeholder="you@example.com"
+              /></label>
+            </div>
+            <label style="display: block; margin-top: 10px">
+              Goal<select name="goal">
+                <option>Fat loss</option>
+                <option>Strength</option>
+                <option>General fitness</option>
+                <option>Other</option>
+              </select></label
+            >
+            <label style="display: block; margin-top: 10px">
+              Message<textarea
+                name="message"
+                rows="4"
+                placeholder="Tell us a bit about you…"
+              ></textarea>
+            </label>
+            <div class="cta-row">
+              <button class="btn primary" type="submit">Send</button>
+            </div>
+          </form>
+          <p style="margin-top: 10px" class="muted">
+            Replace email/WhatsApp with your real contact details.
+          </p>
+        </div>
+        <div>
+          <div class="card">
+            <h3 style="margin-top: 0">Find us online</h3>
+            <p></p>
+            <p>
+              <a
+                href="https://maps.app.goo.gl/XNgSHufnYiTKyzTN9?g_st=ipc"
+                target="_blank"
+                rel="noopener"
+                >Location / gym map</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="foot" style="display: none">
+      <div
+        class="container"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+        "
+      >
+        <p>
+          © <span id="y"></span> <strong>STUDIO TIMELESS FITNESS LLP</strong>
+        </p>
+        <p class="muted"><a href="#top">Back to top ↑</a></p>
+      </div>
+    </footer>
+
+    <!-- Minimal form resets / inputs -->
+    <style>
+      input,
+      select,
+      textarea {
+        width: 100%;
+        margin-top: 6px;
+        background: #0f1218;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        color: var(--text);
+        padding: 10px;
+        outline: none;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        box-shadow: var(--ring);
+        border-color: transparent;
+      }
+    </style>
+
+    <script>
+      // Redirect form submission to WhatsApp with filled info
+      function redirectToWhatsApp(e) {
+        e.preventDefault();
+        var name = document.querySelector('input[name="name"]').value;
+        var email = document.querySelector('input[name="email"]').value;
+        var goal = document.querySelector('select[name="goal"]').value;
+        var message = document.querySelector('textarea[name="message"]').value;
+        var text = `Name: ${name}%0AEmail: ${email}%0AGoal: ${goal}%0AMessage: ${message}`;
+        var url = `https://wa.me/919718271827?text=${text}`;
+        window.open(url, "_blank");
+        return false;
+      }
+      // Current year
+      document.getElementById("y").textContent = new Date().getFullYear();
+
+      // Loader → reveal content after 10 seconds
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loader").style.display = "none";
+          [
+            ".nav",
+            "#top",
+            ".section",
+            "#programs",
+            "#facility",
+            "#pricing",
+            "#highlights",
+            "#contact",
+            "footer",
+          ].forEach((sel) => {
+            document.querySelectorAll(sel).forEach((el) => {
+              el.style.display = sel === ".nav" ? "block" : "block";
+            });
+          });
+          document.querySelector("header.nav").style.display = "block";
+          document.querySelector("header.nav .nav-inner").style.display =
+            "flex";
+          document.querySelector("#top").style.display = "block";
+          document
+            .querySelectorAll(".section")
+            .forEach((s) => (s.style.display = "block"));
+          document.querySelector("footer").style.display = "block";
+        }, 2000); // 2 seconds
+      });
+    </script>
+  </body>
+</html>
